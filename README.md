@@ -1,0 +1,1 @@
+# adopt-gtm-template
