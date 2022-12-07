@@ -1,0 +1,5 @@
+homepage: "https://www.goadopt.io"
+documentation: "https://github.com/goadopt/adopt-gtm-template#adopt-gtm-template"
+versions:
+  - sha: cd5f08a6405d9a01a6918e9bb6a0fcbdae5bc1a4
+    changeNotes: Initial commit.
