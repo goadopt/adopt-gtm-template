@@ -18,7 +18,7 @@ ___INFO___
     "id": "brand_dummy",
     "displayName": ""
   },
-  "description": "",
+  "description": "Template to work with the AdOpt standard consent management solution.",
   "containerContexts": [
     "WEB"
   ]
@@ -32,12 +32,12 @@ ___TEMPLATE_PARAMETERS___
 
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
-// Enter your template code here.
 const log = require('logToConsole');
 const setDefaultConsentState =require('setDefaultConsentState');
 const updateConsentState = require('updateConsentState');
-const getCookieValues = require('getCookieValues');
-
+const setInWindow = require('setInWindow');
+const localStorage = require('localStorage');
+const createQueue = require('createQueue');
 
 setDefaultConsentState({
   ad_storage: 'denied',
@@ -45,15 +45,16 @@ setDefaultConsentState({
   functionality_storage: 'denied',
   personalization_storage: 'denied',
   security_storage: 'denied', 
-  'wait_for_update': 5000
+  'wait_for_update': 500
 });
+
+setInWindow('adopt-is-consent-mode', true, true);
 
 
 let consentObj = null;
-if (getCookieValues("adopt-consent-mode").toString() !== '') {
-  const consentString = getCookieValues("Consents")[0];
-
-  
+const localStorageKey = "adoptConsentMode";
+const consentString = localStorage.getItem(localStorageKey);
+if (consentString !== '') {
   if ((typeof consentString !== 'undefined') && (consentString.indexOf("{") === 0) && (consentString.indexOf("}") > 0)) {
     // Turn consentString into object
     consentObj = {
@@ -88,8 +89,10 @@ if (getCookieValues("adopt-consent-mode").toString() !== '') {
   }
 }
 
+const dataLayerPush = createQueue('dataLayer');
+dataLayerPush({"event": "adopt-consent-mode-ready"}); // this one is used for simple triggers
+setInWindow('adoptConsentModeReady', "adoptConsentModeReady", true); // this one is used for advanced triggers
 
-// Call data.gtmOnSuccess when the tag is finished.
 data.gtmOnSuccess();
 
 
@@ -328,25 +331,184 @@ ___WEB_PERMISSIONS___
   {
     "instance": {
       "key": {
-        "publicId": "get_cookies",
+        "publicId": "access_globals",
         "versionId": "1"
       },
       "param": [
         {
-          "key": "cookieAccess",
-          "value": {
-            "type": 1,
-            "string": "specific"
-          }
-        },
-        {
-          "key": "cookieNames",
+          "key": "keys",
           "value": {
             "type": 2,
             "listItem": [
               {
-                "type": 1,
-                "string": "Consents"
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  },
+                  {
+                    "type": 1,
+                    "string": "execute"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "adopt-is-consent-mode"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  },
+                  {
+                    "type": 1,
+                    "string": "execute"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "dataLayer"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  },
+                  {
+                    "type": 1,
+                    "string": "execute"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "adoptConsentModeReady"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "clientAnnotations": {
+      "isEditedByUser": true
+    },
+    "isRequired": true
+  },
+  {
+    "instance": {
+      "key": {
+        "publicId": "access_local_storage",
+        "versionId": "1"
+      },
+      "param": [
+        {
+          "key": "keys",
+          "value": {
+            "type": 2,
+            "listItem": [
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "adoptConsentMode"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  }
+                ]
               }
             ]
           }
@@ -368,6 +530,6 @@ scenarios: []
 
 ___NOTES___
 
-Created on 12/7/2022, 3:31:16 PM
+Created on 12/16/2022, 4:53:54 PM
 
 
