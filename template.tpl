@@ -32,7 +32,7 @@ ___TEMPLATE_PARAMETERS___
 
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
-const log = require('logToConsole');
+// const log = require('logToConsole');
 const setDefaultConsentState =require('setDefaultConsentState');
 const updateConsentState = require('updateConsentState');
 const setInWindow = require('setInWindow');
@@ -54,8 +54,9 @@ setInWindow('adopt-is-consent-mode', true, true);
 let consentObj = null;
 const localStorageKey = "adoptConsentMode";
 const consentString = localStorage.getItem(localStorageKey);
-if (consentString !== '') {
-  if ((typeof consentString !== 'undefined') && (consentString.indexOf("{") === 0) && (consentString.indexOf("}") > 0)) {
+
+if (consentString !== '' && (typeof consentString !== 'undefined') && consentString !== null) {
+  if ((consentString.indexOf("{") === 0) && (consentString.indexOf("}") > 0)) {
     // Turn consentString into object
     consentObj = {
       preferences: 'denied',
@@ -66,7 +67,7 @@ if (consentString !== '') {
             tempB = {};
         for (let i = 0; i < tempA.length; i += 1) {
           let tempC = tempA[i].split(':');
-          tempB[tempC[0].trim()] = tempC[1].trim();
+          tempB[tempC[0].trim().replace('"', "").replace('"', "")] = tempC[1].trim();
         }
         
         consentObj.preferences = tempB.preferences === 'true' ? 'granted' : 'denied';
@@ -74,6 +75,7 @@ if (consentString !== '') {
         consentObj.statistics = tempB.statistics === 'true' ? 'granted' : 'denied';
         consentObj.marketing = tempB.marketing === 'true' ? 'granted' : 'denied';
         consentObj.region = tempB.region; // This is the region wherefrom the consent was originally submitted
+        
       }
     };
 
@@ -89,6 +91,7 @@ if (consentString !== '') {
   }
 }
 
+
 const dataLayerPush = createQueue('dataLayer');
 dataLayerPush({"event": "adopt-consent-mode-ready"}); // this one is used for simple triggers
 setInWindow('adoptConsentModeReady', "adoptConsentModeReady", true); // this one is used for advanced triggers
@@ -99,27 +102,6 @@ data.gtmOnSuccess();
 ___WEB_PERMISSIONS___
 
 [
-  {
-    "instance": {
-      "key": {
-        "publicId": "logging",
-        "versionId": "1"
-      },
-      "param": [
-        {
-          "key": "environments",
-          "value": {
-            "type": 1,
-            "string": "all"
-          }
-        }
-      ]
-    },
-    "clientAnnotations": {
-      "isEditedByUser": true
-    },
-    "isRequired": true
-  },
   {
     "instance": {
       "key": {
@@ -530,6 +512,6 @@ scenarios: []
 
 ___NOTES___
 
-Created on 12/16/2022, 4:53:54 PM
+Created on 1/13/2023, 10:55:10 AM
 
 
