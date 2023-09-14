@@ -36,31 +36,60 @@ A AdOpt disponibiliza um modelo de tag para dar suporte ao Consent Mode da Googl
 
 ## Configurações
 
-Algumas tags, como as do Google Analytics, Google Ads, possuem *Verificações de permissão integradas*. Isso significa que essas tags incluem uma lógica que altera automaticamente o comportamento da tag de acordo com o consentimento do usuário. Nesses casos, não é necessário fazer nenhuma configuração de consentimento.
+Algumas tags, como as do Google Analytics e Google Ads, possuem *Verificações de permissão integradas*. Isso significa que essas tags incluem uma lógica que altera automaticamente o comportamento da tag de acordo com o consentimento do usuário. Nesses casos, não é necessário fazer nenhuma configuração de consentimento.
 **IMPORTANTE: Tags que contem Verificações de permissão integradas são carregadas/disparadas independente do consentimento do visitante, dados e informações vão ser transmitidas à Google sem a permissão explícita do mesmo, a diferença é que nesses casos essas tags não gravam cookies no navegador. Caso isso seja um problema, ou é algo preocupante pra você, é recomendado configurar essas tags com *Verificações de permissão adicional*, assim, as tags não serão carregadas/disparadas sem o consentimento explícito.**
 
 Pra configurar essas Verificações, siga os próximos passos.
 
+
 1. Clique na tag para abrir ela, e clique na caixa de **Configuração da tag**.
-2. Clique em **Configurações de permissão** para exibir as opções, e marque opção **Exigir consentimento adicional para disparar a tag**.
+![Screenshot from 2023-09-13 15-32-05](https://github.com/goadopt/adopt-gtm-template/assets/3474681/4dce40f5-5da0-4ea0-a720-1af26093bef1)
+
+2. Clique em **Configurações avançadas**, e em **Configurações de permissão** para exibir as opções, e marque opção **Exigir consentimento adicional para disparar a tag**.
+![Screenshot from 2023-09-13 15-39-20](https://github.com/goadopt/adopt-gtm-template/assets/3474681/f11400be-6a81-44b0-a19f-87052f3bf8fd)
+![Screenshot from 2023-09-13 15-39-35](https://github.com/goadopt/adopt-gtm-template/assets/3474681/fe69f31e-0e40-4114-91b8-ba8881c5a87f)
+
 3. Clique no botão de **+ Adicionar consentimento obrigatório**, clique no campo que acabou de aparecer, e selecione o tipo de consentimento desejado.
+![Screenshot from 2023-09-13 15-39-50](https://github.com/goadopt/adopt-gtm-template/assets/3474681/56060b78-374e-4682-9070-0285b1c2a4ed)
 4. Repita o passo 3 para todos os tipos de consentimento que você deseja adicionar.
+
 
 Caso a tag tenha um acionador simples, como um All Pages, siga esses passos:
 
 1. Clique na caixa de **Acionamento**, e clique no símbolo de "+", e na lista de acionadores disponíveis, clique novamente no símbolo de "+" para configurar um novo acionador.
+![Screenshot from 2023-09-13 15-43-09](https://github.com/goadopt/adopt-gtm-template/assets/3474681/38c1ed7a-367f-4529-98e8-efafab1cc392)
+![Screenshot from 2023-09-13 15-43-24](https://github.com/goadopt/adopt-gtm-template/assets/3474681/8072acbb-d256-48e5-9bfa-291a401a765b)
+
 2. Clique na caixa de "Configuração do acionador", e da lista de tipos disponíveis, selecione o **Evento personalizado**, na seção de **Outros**.
-3. No **Nome do evento**, digite `adopt-consent-mode-ready`, e selecione a opção de **Todos os eventos personalizados**, caso ainda essa opção ainda não esteja selecionada, e clique no botão azul de **Salvar**.
+![Screenshot from 2023-09-13 15-44-25](https://github.com/goadopt/adopt-gtm-template/assets/3474681/fd875165-9e93-4b93-bef3-3b863232ff1b)
+![Screenshot from 2023-09-13 15-46-32](https://github.com/goadopt/adopt-gtm-template/assets/3474681/fbc9a735-1184-4d8d-97ee-2b89f3fd8191)
+
+3. No **Nome do evento**, digite `adopt-consent-mode-ready`, e selecione a opção de **Todos os eventos personalizados**, caso ainda essa opção ainda não esteja selecionada, eescolha um nome para o acionador, e clique no botão azul de **Salvar**.
+![Screenshot from 2023-09-13 15-48-19](https://github.com/goadopt/adopt-gtm-template/assets/3474681/1f1fc266-e2d1-4e14-8d45-7c5cf483ccf6)
+
 4. Verifique se os dois acionadores estão presentes (o acionador antigo que já estava lá e o novo acionador personalizado que você acabou de configurar), e clique no botão azul de **Salvar**
+![Screenshot from 2023-09-13 15-55-32](https://github.com/goadopt/adopt-gtm-template/assets/3474681/9e1d8bb5-c51d-4cb8-ba7a-30b1aee455c0)
+
 5. Clique no botão azul de **Salvar** no campo superior direito.
 
 Caso a tag tenha outros tipos de acionadores, que dependem de ações do visitante, como clicks, ou outras regras como url específica, siga esses passos (nesse exemplo específico, vamos usar um acionador baseado em cliques):
 1. Clique no acionador, para abrir as configurações dele, clique na caixa **Configurações do acionador**, e marque a opção de **Alguns cliques**
+![Screenshot from 2023-09-13 16-00-33](https://github.com/goadopt/adopt-gtm-template/assets/3474681/d4804910-a7eb-485c-b284-c8e148475424)
+
 2. Nos campos que acabaram de aparecer, no primeiro campo, clique em **Nova variável...**, e novamente na caixa de **Configuração da variável**.
-3. Na lista, clique em **Variável JavaScript**.
-4. De volta à Configuração da variável, no **Nome da variável global**, digite `adoptConsentModeReady`, escolha um nome para essa variável, e clique no botão azul de **Salvar** no canto superior direito.
-5. De volta à **Configuração do acionador**, selecione **contém** no segundo campo, e no terceiro campo, digite novamente `adoptConsentModeReady`.
-6. Clique no botão azul de **Salvar** no canto superior direito.
-7. Repita esses passos para cada um dos acionadores desse tipo, mas ao invés de criar uma nova variável, apenas selecione a variável que você já criou na primeira vez.
+![Screenshot from 2023-09-13 17-04-03](https://github.com/goadopt/adopt-gtm-template/assets/3474681/1cb3e3bc-ea08-4716-ae33-f00df7bfc1ec)
+![Screenshot from 2023-09-13 16-02-13](https://github.com/goadopt/adopt-gtm-template/assets/3474681/65dc20e9-339f-4f9c-8dc4-ecbe4277812d)
+
+3. Na lista, clique em **Variável JavaScript**.  
+![Screenshot from 2023-09-13 16-03-09](https://github.com/goadopt/adopt-gtm-template/assets/3474681/721ce69c-4d1c-4af0-832b-27238142674b)
+
+5. De volta à Configuração da variável, no **Nome da variável global**, digite `adoptConsentModeReady`, escolha um nome para essa variável, e clique no botão azul de **Salvar** no canto superior direito.
+![Screenshot from 2023-09-13 16-04-33](https://github.com/goadopt/adopt-gtm-template/assets/3474681/91afffe5-8c56-41ab-a1cb-4c1ab8f11f7d)
+
+6. De volta à **Configuração do acionador**, selecione **contém** no segundo campo, e no terceiro campo, digite novamente `adoptConsentModeReady`.
+![Screenshot from 2023-09-13 16-06-39](https://github.com/goadopt/adopt-gtm-template/assets/3474681/e168fb9c-629c-4b65-9c3d-8d5c1ae39ee2)
+
+7. Clique no botão azul de **Salvar** no canto superior direito.
+8. Repita esses passos para cada um dos acionadores desse tipo, mas ao invés de criar uma nova variável, apenas selecione a variável que você já criou na primeira vez.
 
 E é isso, não se esqueça de publicar as modificações.
