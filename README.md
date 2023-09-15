@@ -29,8 +29,8 @@ A AdOpt disponibiliza um modelo de tag para dar suporte ao Consent Mode da Googl
 4. Adicione um segundo acionador, do tipo **Evento personalizado**.
     1. Clique no símbolo de "+" para adicionar um novo acionador, e na lista de acionadores, clique novamente no símbolo de "+" para criar um novo acionador.
     2. Clique na caixa de **Configuração do acionador** e na lista que vai abrir à direita, clique no **Evento personalizado**, na seção de **Outros**.
-    3. Escolha um nome de sua preferência pra esse acionador, e no **Nome do evento**, digite `adopt-visitor-consent-ready`.
-    4. Verifique que a opção de **Todoso os eventos personalizados** esteja selecionada, selecione essa opção se ncessário e clique no botão azul de **Salvar**
+    3. Escolha um nome de sua preferência pra esse acionador, e no **Nome do evento**, digite `adopt-visitor-consent-ready`
+    4. Verifique que a opção de **Todos os eventos personalizados** esteja selecionada, selecione essa opção se necessário e clique no botão azul de **Salvar**
     5. De volta à configuração, verifique se os dois acionadores estão configurados, e clique no botão azul de **Salvar**.
 
 
