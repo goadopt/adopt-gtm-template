@@ -1,6 +1,10 @@
 homepage: "https://www.goadopt.io"
 documentation: "https://github.com/goadopt/adopt-gtm-template#adopt-gtm-template"
 versions:
+  # Latest version
+  - sha: 3f41d12f359bbce5407fef040df5a706f5ff9e71
+    changeNotes: Added v2 fields;
+  # Old versions
   - sha: f58c4591d99d404ec53fd86a9d5d2729ce45b951
     changeNotes: removed logs; quotes replace;
   - sha: 77c2fe10a811ffa07ba91ff5b043bc67e0753a20
