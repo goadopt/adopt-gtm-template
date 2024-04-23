@@ -28,7 +28,16 @@ ___INFO___
 
 ___TEMPLATE_PARAMETERS___
 
-[]
+[
+  {
+    "type": "CHECKBOX",
+    "name": "universalBlock",
+    "checkboxText": "Block even when granted by default",
+    "simpleValueType": true,
+    "help": "In some selected locations, the visitor\u0027s local legislation allows you to set some properties as granted by default. If you prefer to use the universal default, which is \"denied\" and only use the visitor\u0027s explicit consent,  select this option.",
+    "defaultValue": false
+  }
+]
 
 
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
@@ -39,6 +48,15 @@ const updateConsentState = require('updateConsentState');
 const setInWindow = require('setInWindow');
 const localStorage = require('localStorage');
 const createQueue = require('createQueue');
+const universalBlock = data.universalBlock ? true : false;
+
+
+if (universalBlock === false) {
+  setDefaultConsentState({
+    'analytics_storage': 'granted',
+    'region': ['BR']
+  });
+}
 
 setDefaultConsentState({
   ad_storage: 'denied',
@@ -47,7 +65,7 @@ setDefaultConsentState({
   analytics_storage: 'denied',
   functionality_storage: 'denied',
   personalization_storage: 'denied',
-  security_storage: 'denied', 
+  security_storage: 'granted', 
   'wait_for_update': 500
 });
 
@@ -579,5 +597,5 @@ scenarios: []
 
 ___NOTES___
 
-Created on 3/15/2024, 10:43:00 AM
+Created on 4/23/2024, 11:31:09 AM
 
