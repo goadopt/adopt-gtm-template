@@ -2,9 +2,11 @@ homepage: "https://www.goadopt.io"
 documentation: "https://github.com/goadopt/adopt-gtm-template#adopt-gtm-template"
 versions:
   # Latest version
+  - sha: abb87582076b631b209b91083430735b73f7011b
+    changeNotes: fixed faulty template defaults on updates;
+  # Old versions
   - sha: 709d0071524928c665474509275b2149830689ba
     changeNotes: Cookie banner; GCM deafaults;
-  # Old versions
   - sha: 60999fa4671bb35300280e9b1d0222cfe99ca5b2
     changeNotes: ga em br
   - sha: cffb3a07f5e2769c171892f49eb3ffa533a1877d
