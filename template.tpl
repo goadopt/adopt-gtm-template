@@ -296,6 +296,9 @@ const installBanner = data.installBanner;
 const disclaimerId = data.disclaimerId;
 
 const universalBlock = data.universalBlock ? true : false;
+const isGCMEnabled = data.isGCMEnabled == null ? true : data.isGCMEnabled ;
+const GCMDefaults = data.GCMDefaults == null ? [{"ad_personalization":"denied","ad_storage":"denied","ad_user_data":"denied","analytics_storage":"granted","functionality_storage":"denied","personalization_storage":"denied","region":"BR"},{"ad_personalization":"denied","ad_storage":"denied","ad_user_data":"denied","analytics_storage":"denied","functionality_storage":"denied","personalization_storage":"denied","region":""}] : data.GCMDefaults;
+
 
 if (installBanner && disclaimerId && disclaimerId.length > 0) {
   const injectScript = require('injectScript');
@@ -305,7 +308,7 @@ if (installBanner && disclaimerId && disclaimerId.length > 0) {
   injectScript(scriptUrl);
 }
 
-if (data.isGCMEnabled) {
+if (isGCMEnabled) {
   const dataLayerPush = createQueue('dataLayer');
   
   const splitInput = (input) => {
@@ -330,12 +333,12 @@ if (data.isGCMEnabled) {
     return commandData;
   };
   
-  gtagSet('ads_data_redaction', data.adsDataRedaction);
-  gtagSet('url_passthrough', data.urlPassthrough);
+  gtagSet('ads_data_redaction', data.adsDataRedaction == null ? false: data.urlPassthrough);
+  gtagSet('url_passthrough', data.urlPassthrough == null ? false: data.urlPassthrough);
   gtagSet('developer_id.dZmNiZj', true);
   // Set default consent state(s)
-  if (data.GCMDefaults && !universalBlock) {
-    data.GCMDefaults.forEach(settings => {
+  if (GCMDefaults && !universalBlock) {
+    GCMDefaults.forEach(settings => {
       const defaultStates = parseCommandData(settings);
       // wait_for_update (ms) allows for time to receive visitor choices from the CMP
       defaultStates.wait_for_update = 500;
