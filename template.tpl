@@ -219,6 +219,26 @@ ___TEMPLATE_PARAMETERS___
               "simpleValueType": true
             },
             "isUnique": false
+          },
+          {
+            "param": {
+              "type": "SELECT",
+              "name": "security_storage",
+              "displayName": "Security Storage",
+              "macrosInSelect": false,
+              "selectItems": [
+                {
+                  "value": "granted",
+                  "displayValue": "Granted"
+                },
+                {
+                  "value": "denied",
+                  "displayValue": "Denied"
+                }
+              ],
+              "simpleValueType": true
+            },
+            "isUnique": false
           }
         ],
         "enablingConditions": [
@@ -236,7 +256,8 @@ ___TEMPLATE_PARAMETERS___
             "ad_user_data": "denied",
             "ad_personalization": "denied",
             "personalization_storage": "denied",
-            "functionality_storage": "denied"
+            "functionality_storage": "denied",
+            "security_storage": "denied"
           },
           {
             "region": "",
@@ -245,7 +266,8 @@ ___TEMPLATE_PARAMETERS___
             "ad_user_data": "denied",
             "ad_personalization": "denied",
             "personalization_storage": "denied",
-            "functionality_storage": "denied"
+            "functionality_storage": "denied",
+            "security_storage": "denied"
           }
         ]
       },
@@ -297,7 +319,7 @@ const disclaimerId = data.disclaimerId;
 
 const universalBlock = data.universalBlock ? true : false;
 const isGCMEnabled = data.isGCMEnabled == null ? true : data.isGCMEnabled ;
-const GCMDefaults = data.GCMDefaults == null ? [{"ad_personalization":"denied","ad_storage":"denied","ad_user_data":"denied","analytics_storage":"granted","functionality_storage":"denied","personalization_storage":"denied","region":"BR"},{"ad_personalization":"denied","ad_storage":"denied","ad_user_data":"denied","analytics_storage":"denied","functionality_storage":"denied","personalization_storage":"denied","region":""}] : data.GCMDefaults;
+const GCMDefaults = data.GCMDefaults == null ? [{"ad_personalization":"denied","ad_storage":"denied","ad_user_data":"denied","analytics_storage":"granted","functionality_storage":"denied","personalization_storage":"denied","security_storage": "denied","region":"BR"},{"ad_personalization":"denied","ad_storage":"denied","ad_user_data":"denied","analytics_storage":"denied","functionality_storage":"denied","personalization_storage":"denied","security_storage": "denied""region":""}] : data.GCMDefaults;
 
 
 if (installBanner && disclaimerId && disclaimerId.length > 0) {
@@ -398,7 +420,7 @@ if (isGCMEnabled) {
         'analytics_storage': consentObj.statistics,
         'functionality_storage': consentObj.func,
         'personalization_storage': consentObj.preferences,
-        'security_storage': 'granted'
+        'security_storage': consentObj.func
       });
     }
   }
