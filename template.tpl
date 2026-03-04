@@ -356,7 +356,7 @@ if (isGCMEnabled) {
   };
   
   gtagSet('ads_data_redaction', data.adsDataRedaction == null ? false : data.adsDataRedaction);
-  gtagSet('url_passthrough', data.urlPassthrough == null ? false: data.urlPassthrough);
+  gtagSet('url_passthrough', data.urlPassthrough == null ? false : data.urlPassthrough);
   gtagSet('developer_id.dZmNiZj', true);
   // Set default consent state(s)
   if (GCMDefaults && !universalBlock) {
