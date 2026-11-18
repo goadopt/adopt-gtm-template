@@ -968,7 +968,7 @@ ___TESTS___
 scenarios:
 - name: Default keeps the configured security_storage
   code: |-
-    mock('localStorage', {getItem: () => null});
+    mockObject('localStorage', {getItem: () => null});
     runCode({
       isGCMEnabled: true,
       GCMDefaults: [{region: 'BR', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'granted', functionality_storage: 'denied', personalization_storage: 'denied', security_storage: 'denied'}]
@@ -977,7 +977,7 @@ scenarios:
     assertApi('gtmOnSuccess').wasCalled();
 - name: Default honours security_storage granted when configured
   code: |-
-    mock('localStorage', {getItem: () => null});
+    mockObject('localStorage', {getItem: () => null});
     runCode({
       isGCMEnabled: true,
       GCMDefaults: [{region: '', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied', functionality_storage: 'denied', personalization_storage: 'denied', security_storage: 'granted'}]
@@ -985,7 +985,7 @@ scenarios:
     assertApi('setDefaultConsentState').wasCalledWith({ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied', functionality_storage: 'denied', personalization_storage: 'denied', security_storage: 'granted', wait_for_update: 500});
 - name: Default row without security_storage falls back to denied
   code: |-
-    mock('localStorage', {getItem: () => null});
+    mockObject('localStorage', {getItem: () => null});
     runCode({
       isGCMEnabled: true,
       GCMDefaults: [{region: '', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied', functionality_storage: 'denied', personalization_storage: 'denied'}]
@@ -993,17 +993,17 @@ scenarios:
     assertApi('setDefaultConsentState').wasCalledWith({ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied', functionality_storage: 'denied', personalization_storage: 'denied', security_storage: 'denied', wait_for_update: 500});
 - name: Universal block denies every type including security_storage
   code: |-
-    mock('localStorage', {getItem: () => null});
+    mockObject('localStorage', {getItem: () => null});
     runCode({isGCMEnabled: true, universalBlock: true});
     assertApi('setDefaultConsentState').wasCalledWith({ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied', functionality_storage: 'denied', personalization_storage: 'denied', security_storage: 'denied'});
 - name: Stored consent maps security_storage to Functional
   code: |-
-    mock('localStorage', {getItem: () => '{"preferences":false,"func":true,"statistics":true,"marketing":false}'});
+    mockObject('localStorage', {getItem: () => '{"preferences":false,"func":true,"statistics":true,"marketing":false}'});
     runCode({isGCMEnabled: true});
     assertApi('updateConsentState').wasCalledWith({ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'granted', functionality_storage: 'granted', personalization_storage: 'denied', security_storage: 'granted'});
 - name: Stored consent without Functional denies security_storage
   code: |-
-    mock('localStorage', {getItem: () => '{"preferences":false,"func":false,"statistics":true,"marketing":false}'});
+    mockObject('localStorage', {getItem: () => '{"preferences":false,"func":false,"statistics":true,"marketing":false}'});
     runCode({isGCMEnabled: true});
     assertApi('updateConsentState').wasCalledWith({ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'granted', functionality_storage: 'denied', personalization_storage: 'denied', security_storage: 'denied'});
 
