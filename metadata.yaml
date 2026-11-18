@@ -2,9 +2,11 @@ homepage: "https://www.goadopt.io"
 documentation: "https://github.com/goadopt/adopt-gtm-template#adopt-gtm-template"
 versions:
   # Latest version
+  - sha: e415df83121e30733ce08669de840919e0e5895d
+    changeNotes: security_storage default follows the configured value (no longer forced to granted); universal block denies security_storage; template tests.
+  # Old versions
   - sha: 0dced149640556cbb17fa2f1ecb8584edf480b8c
     changeNotes: small fixes;
-  # Old versions
   - sha: 5ffb7db82ac3a05a6de333de209da82940b62e66
     changeNotes: missed coma in defaults;
   - sha: cf956a36c5099529a588bc6918e7ae3ac557fecb
