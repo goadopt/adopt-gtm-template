@@ -404,7 +404,9 @@ if (isGCMEnabled) {
             tempB = {};
            for (let i = 0; i < tempA.length; i += 1) {
             let tempC = tempA[i].split(':');
-            tempB[tempC[0].trim().replace('"', "").replace('"', "")] = tempC[1].trim();
+            if (tempC.length > 1) {
+              tempB[tempC[0].trim().replace('"', "").replace('"', "")] = tempC[1].trim();
+            }
           }
         
           consentObj.preferences = tempB.preferences === 'true' ? 'granted' : 'denied';
@@ -1006,6 +1008,12 @@ scenarios:
     mockObject('localStorage', {getItem: () => '{"preferences":false,"func":false,"statistics":true,"marketing":false}'});
     runCode({isGCMEnabled: true});
     assertApi('updateConsentState').wasCalledWith({ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'granted', functionality_storage: 'denied', personalization_storage: 'denied', security_storage: 'denied'});
+- name: Stored empty object denies every signal and completes
+  code: |-
+    mockObject('localStorage', {getItem: () => '{}'});
+    runCode({isGCMEnabled: true});
+    assertApi('updateConsentState').wasCalledWith({ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'denied', functionality_storage: 'denied', personalization_storage: 'denied', security_storage: 'denied'});
+    assertApi('gtmOnSuccess').wasCalled();
 
 
 ___NOTES___
